@@ -23,6 +23,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     lateinit var viewModel: HomeViewModel
     private val itunesService = ITunesService.getInstance()
+    var adapter: GalleryAdapter? = null
 
 
     override fun onCreateView(
@@ -38,12 +39,21 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         val gallery: RecyclerView = binding.galleryList
-        gallery.layoutManager = GridLayoutManager(context,2)
+        gallery.layoutManager = GridLayoutManager(context,3)
         viewModel.galleryList.observe(viewLifecycleOwner) {
 //            textView.text = it
-            gallery.adapter = GalleryAdapter(it!!,requireContext())
+            adapter = GalleryAdapter(it!!,requireContext())
+            gallery.adapter = adapter
         }
         viewModel.getGallery()
+
+        binding.btnShowBookMark.setOnClickListener{
+            if(adapter?.toggleBookMark() == true){
+                binding.btnShowBookMark.setText("SHOW ALL")
+            }else{
+                binding.btnShowBookMark.setText("SHOW BOOKMARK")
+            }
+        }
         return root
     }
 

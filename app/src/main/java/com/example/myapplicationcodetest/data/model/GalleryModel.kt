@@ -24,4 +24,5 @@ data class GalleryModel(
     @SerializedName("currency") val currency: String,
     @SerializedName("releaseDate") val releaseDate: String,
     @SerializedName("primaryGenreName") val primaryGenreName: String,
+    var bookmark : Boolean = false
 )
